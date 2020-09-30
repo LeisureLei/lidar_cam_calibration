@@ -1,0 +1,16 @@
+<launch>
+
+  <node pkg="dynamic_calibration" type="dynamic_calibration_node" name="dynamic_calibration_node" output="screen" >
+  <remap from = "/image_raw" to = "/cam00/image_raw" />  
+  <remap from = "/camera_info" to = "/cam00/camera_info" />  
+  <remap from = "/pointcloud" to ="/velodyne_points" />
+  </node>
+  
+  <node pkg="rqt_reconfigure" type="rqt_reconfigure" name="rqt_reconfigure" output="screen" />
+  
+  <arg name="rviz" default="true" />
+  <group if="$(arg rviz)">
+        <node launch-prefix="nice" pkg="rviz" type="rviz" name="rviz" args="-d $(find dynamic_calibration)/cfg/dynamic_calibration.rviz" />
+    </group>
+    
+</launch>
